@@ -35,7 +35,7 @@ public class SwingGUI implements UserInterface {
 
     @Override
     public void showMessage(String username, String message) throws RemoteException {        
-        output.append(nickname + ": " + message + "\n");
+        output.append(username + ": " + message + "\n");
         output.setCaretPosition(output.getText().length() - 1);
     }
 
@@ -95,9 +95,11 @@ public class SwingGUI implements UserInterface {
         input.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    showMessage(nickname, input.getText());
-                    client.sendMessage(input.getText());
-                    input.setText("");
+                    String text = input.getText();
+                    if(!text.equals("")){
+                        client.sendMessage(text);
+                        input.setText("");
+                    }
                 } catch (RemoteException ex) {
                     ex.printStackTrace();
                 }

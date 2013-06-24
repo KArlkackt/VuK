@@ -67,9 +67,7 @@ public class ChatServerImpl extends UnicastRemoteObject implements ChatServer {
     }
 
     public void sendMessage(String message, ChatProxyImpl cp) throws RemoteException{
-        ChatProxyImpl temp;
-        for (int i = 0; i < users.size(); i++) {
-            temp = (ChatProxyImpl) users.get(i);
+        for (ChatProxy temp : users) {
             try {
                 temp.getHandle().receiveMessage(cp.getUsername(), message);
             } catch (RemoteException ex) {
@@ -101,7 +99,7 @@ public class ChatServerImpl extends UnicastRemoteObject implements ChatServer {
             System.err.println("Run 'rmiregistry " + Registry.REGISTRY_PORT + "'");
         } catch (Exception ex) {
             System.err.println("Exception during server registration (port = " + Registry.REGISTRY_PORT + ")");
-            ex.printStackTrace();
+            System.err.println(ex.getMessage());
         }
     }
 }
