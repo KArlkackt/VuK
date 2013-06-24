@@ -16,8 +16,7 @@ public class ClientProxyImpl extends UnicastRemoteObject implements ClientProxy{
     
     public ClientProxyImpl(ChatClient client) throws RemoteException {
         this.client = client;
-    }
-    
+    }  
     
     @Override
     public void receiveMessage(String username, String message) throws RemoteException {

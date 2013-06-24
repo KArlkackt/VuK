@@ -20,13 +20,12 @@ public class ChatServerImpl extends UnicastRemoteObject implements ChatServer {
 
     public ChatServerImpl() throws RemoteException {
         users = new ArrayList();
-
         System.out.println("Chatserver created...");
     }
 
     @Override
     public ChatProxy subscribeUser(String username, ClientProxy handle) throws RemoteException {       
-        ChatProxy cp = new ChatProxyImpl(this, username, handle);
+        
         boolean found = false;
         for(ChatProxy cpu : users){
             if(cpu.getUsername().equals(username)){
@@ -36,6 +35,7 @@ public class ChatServerImpl extends UnicastRemoteObject implements ChatServer {
             }
         }
         if(!found){
+            ChatProxy cp = new ChatProxyImpl(this, username, handle);
             users.add(cp);
             System.out.println("User " + username + " subscribed!");
             return cp;
@@ -66,7 +66,7 @@ public class ChatServerImpl extends UnicastRemoteObject implements ChatServer {
 //        }
     }
 
-    public void sendMessage(String message, ChatProxyImpl cp) {
+    public void sendMessage(String message, ChatProxyImpl cp) throws RemoteException{
         ChatProxyImpl temp;
         for (int i = 0; i < users.size(); i++) {
             temp = (ChatProxyImpl) users.get(i);
@@ -79,8 +79,7 @@ public class ChatServerImpl extends UnicastRemoteObject implements ChatServer {
     }
 
     public static void main(String[] args) {
-
-        Registry registry = null;
+        Registry registry = null;       
         try {
             registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
             //registry = LocateRegistry.getRegistry();
@@ -91,7 +90,7 @@ public class ChatServerImpl extends UnicastRemoteObject implements ChatServer {
             System.err.println("Cannot find registry");
             System.exit(0);
         }
-
+        
         try {
             registry.rebind("ChatServer", new ChatServerImpl());
             // Es gibt auch eine statische Methode, die verwendet werden kann.

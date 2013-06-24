@@ -14,4 +14,6 @@ import java.rmi.RemoteException;
 public interface ChatProxy extends Remote {
     public void sendMessage (String message) throws RemoteException;
     public String getUsername() throws RemoteException;
+    public ChatServer getServer() throws RemoteException;
+    public ClientProxy getHandle() throws RemoteException;
 }

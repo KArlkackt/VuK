@@ -13,6 +13,5 @@ import java.rmi.RemoteException;
  */
 public interface ChatServer extends Remote {
     public ChatProxy subscribeUser (String username, ClientProxy handle) throws RemoteException;
-    public boolean unsubscribeUser (ChatProxy username) throws RemoteException;
-    
+    public boolean unsubscribeUser (ChatProxy username) throws RemoteException;    
 }

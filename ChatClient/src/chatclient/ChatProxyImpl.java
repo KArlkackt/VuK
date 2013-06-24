@@ -16,11 +16,10 @@ class ChatProxyImpl extends UnicastRemoteObject implements ChatProxy {
     private ChatServerImpl server;
     private String username;
     private ClientProxy handle;
-    
+
     public ChatProxyImpl() throws RemoteException {
-        
     }
-    
+
     public ChatProxyImpl(ChatServerImpl server, String username, ClientProxy handle) throws RemoteException {
         this.server = server;
         this.username = username;
@@ -31,15 +30,19 @@ class ChatProxyImpl extends UnicastRemoteObject implements ChatProxy {
     public void sendMessage(String message) throws RemoteException {
         server.sendMessage(message, this);
     }
-    
-    public ClientProxy getHandle(){
+
+    @Override
+    public ClientProxy getHandle() throws RemoteException {
         return handle;
     }
-      
+
     @Override
-    public String getUsername(){
+    public String getUsername() throws RemoteException {
         return username;
     }
-    
-    
+
+    @Override
+    public ChatServer getServer() throws RemoteException {
+        return server;
+    }
 }
